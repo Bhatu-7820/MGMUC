@@ -8,7 +8,7 @@
     "frontend": "npm --prefix frontend run dev",
     "backend": "npm --prefix backend run dev",
     "client": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install",
+    "build": "npm --prefix frontend install --include=dev && npm --prefix frontend run build && npm --prefix backend install",
     "start": "node backend/src/app.js",
     "seed": "node backend/src/utils/seed.js"
   },
