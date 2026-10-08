@@ -191,11 +191,12 @@ const generateWithGemini = async (apiKey, systemPrompt, userContent) => {
  * @returns {string|null} - Generated response text, or null on failure
  */
 const generateWithPrimaryAI = async (query, sources, classification, contextHistory = []) => {
-  const apiKey = process.env.AI_API_KEY;
-  const provider = (process.env.AI_PROVIDER || 'groq').toLowerCase();
+  const provider = (process.env.AI_PROVIDER || '').toLowerCase();
+  const groqKey = process.env.GROQ_API_KEY || (process.env.AI_API_KEY?.startsWith('gsk_') ? process.env.AI_API_KEY : (provider === 'groq' ? process.env.AI_API_KEY : null));
+  const geminiKey = process.env.GEMINI_API_KEY || (provider === 'gemini' ? process.env.AI_API_KEY : (!process.env.AI_API_KEY?.startsWith('gsk_') ? process.env.AI_API_KEY : null));
 
-  if (!apiKey) {
-    logger.info('[AI] No AI_API_KEY provided. Bypassing external LLM call.');
+  if (!groqKey && !geminiKey) {
+    logger.info('[AI] Neither GROQ_API_KEY nor GEMINI_API_KEY / AI_API_KEY provided. Bypassing external LLM call.');
     return null;
   }
 
@@ -219,18 +220,32 @@ const generateWithPrimaryAI = async (query, sources, classification, contextHist
   userMessage += `## USER'S CURRENT QUESTION\n${query}\n\n`;
   userMessage += `## YOUR TASK\nAnswer ONLY what the user explicitly asked in their question. DO NOT include unrequested extra information (e.g. if they asked about fees, do NOT add eligibility, syllabus, or hostel details). Answer directly, accurately, and concisely from the verified evidence above. Follow all system rules strictly.`;
 
-  // Use Groq
-  if (provider === 'groq' || apiKey.startsWith('gsk_')) {
+  // If provider prefers Groq or Groq key is present
+  if ((provider === 'groq' || !provider || !geminiKey) && groqKey) {
     const messages = [
       { role: 'system', content: SYSTEM_PROMPT },
       { role: 'user', content: userMessage }
     ];
-    const result = await generateWithGroq(apiKey, messages);
+    const result = await generateWithGroq(groqKey, messages);
     if (result) return result;
   }
 
-  // Fallback to Gemini
-  return await generateWithGemini(apiKey, SYSTEM_PROMPT, userMessage);
+  // Use Gemini (if Gemini preferred, or if Groq failed/not available)
+  if (geminiKey) {
+    const geminiResult = await generateWithGemini(geminiKey, SYSTEM_PROMPT, userMessage);
+    if (geminiResult) return geminiResult;
+  }
+
+  // Fallback to Groq if Gemini wasn't able to respond and Groq key exists
+  if (groqKey) {
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: userMessage }
+    ];
+    return await generateWithGroq(groqKey, messages);
+  }
+
+  return null;
 };
 
 module.exports = {

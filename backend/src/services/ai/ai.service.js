@@ -130,7 +130,7 @@ const processAiResponse = async (query, sources, classification, contextHistory 
   }
 
   // ── Step 2: Try Primary AI Provider ──────────────────────────────────────
-  if (process.env.AI_API_KEY) {
+  if (process.env.AI_API_KEY || process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY) {
     try {
       rawResponseText = await generateWithPrimaryAI(query, sources, classification, contextHistory);
       if (rawResponseText) {
