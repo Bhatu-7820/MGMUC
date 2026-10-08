@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --primary-blue: #3B82F6;
+    --primary-blue-dark: #2563EB;
+    --light-blue-bg: #E8F0FE;
+    --app-bg: #F4F8FD;
+    --sidebar-bg: #F0F4FA;
+    --header-bg: #FFFFFF;
+    --dark-navy: #1E293B;
+    --secondary-slate: #64748B;
+    --muted-slate: #94A3B8;
+    --border-color: #E2E8F0;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #F4F8FD !important;
+    color: #1E293B !important;
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    color: #1E293B;
+  }
+}
+
+/* Full Page Wrapper */
+.full-page-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background: #F4F8FD;
+  overflow: hidden;
+}
+
+/* Header Styling - Premium Translucent Glass Effect */
+.app-header {
+  background: rgba(255, 255, 255, 0.55) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03) !important;
+  height: 68px;
+}
+
+/* Sidebar Styling - Soft Translucent Blue/White Surface */
+.app-sidebar {
+  background: rgba(235, 243, 255, 0.55) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 4px 0 16px rgba(15, 23, 42, 0.02) !important;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+
+/* Main Content Area with 100% Full & Crystal Clear College Campus Photo Background */
+.main-content-canvas {
+  background-color: #F4F8FD;
+  background-image: url('/college_bg_photo.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+}
+
+/* Subtle top and bottom vignette gradient to ensure header & input bar readability while keeping 90% of photo 100% clear */
+.main-content-canvas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 25%, rgba(255, 255, 255, 0) 75%, rgba(244, 248, 253, 0.5) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+
+
+/* Clean White Target Card Surface */
+.app-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 16px rgba(30, 41, 59, 0.04);
+  border-radius: 18px;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-card:hover {
+  border-color: #BFDBFE;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Bottom Chat Bar Container & Floating Capsule Pill */
+.bottom-bar-container {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-top: none !important;
+}
+
+.app-composer-pill {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  box-shadow: 0 10px 35px rgba(30, 41, 59, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.app-composer-pill:focus-within {
+  border-color: #3B82F6;
+  box-shadow: 0 12px 40px rgba(37, 99, 235, 0.18), 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
+}
+
+/* Clean Markdown Typography */
+.prose-academic p {
+  margin-bottom: 0.95rem;
+  line-height: 1.7;
+  color: #1E293B;
+  font-size: 0.95rem;
+}
+
+.prose-academic h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1.5px solid #E8F0FE;
+}
+
+.prose-academic h4 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2563EB;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.prose-academic ol {
+  list-style-type: decimal;
+  padding-left: 1.35rem;
+  margin-bottom: 0.95rem;
+  color: #1E293B;
+}
+
+.prose-academic ol li {
+  margin-bottom: 0.45rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.prose-academic ul {
+  list-style-type: disc;
+  padding-left: 1.35rem;
+  margin-bottom: 0.95rem;
+  color: #1E293B;
+}
+
+.prose-academic ul li {
+  margin-bottom: 0.4rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.prose-academic strong {
+  font-weight: 700;
+  color: #2563EB;
+}
+
+.prose-academic table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #E2E8F0;
+}
+
+.prose-academic th,
+.prose-academic td {
+  border: 1px solid #E8F0FE;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.prose-academic th {
+  background-color: #E8F0FE;
+  color: #2563EB;
+  font-weight: 700;
+  font-family: var(--font-heading);
+}
+
+.prose-academic td {
+  background-color: #FFFFFF;
+}
+
+.prose-academic blockquote {
+  border-left: 3.5px solid #3B82F6;
+  padding-left: 0.85rem;
+  margin: 0.75rem 0;
+  color: #475569;
+  font-style: italic;
+  background-color: #F8FAFC;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-radius: 0 0.375rem 0.375rem 0;
+}

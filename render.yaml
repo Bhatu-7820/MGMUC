@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: mgmuc-chatbot
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: AI_PROVIDER
+        value: gemini
+      - key: STRICT_GROUNDING
+        value: "true"
+      - key: ENABLE_MOCK_FALLBACK
+        value: "true"
+      - key: AI_API_KEY
+        sync: false
+      - key: MONGO_URI
+        sync: false
